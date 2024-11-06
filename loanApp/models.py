@@ -14,6 +14,16 @@ class loanCategory(models.Model):
         return self.loan_name
 
 
+class Time(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.name
+class Percentage_Profit(models.Model):
+    Percentage_profit = models.CharField(max_length=250)
+    Time_limit = models.ForeignKey(Time, on_delete=models.CASCADE, related_name='time_limit')
+    def __str__(self):
+        return self.name
 class loanRequest(models.Model):
     customer = models.ForeignKey(
         CustomerSignUp, on_delete=models.CASCADE, related_name='loan_customer')
@@ -25,7 +35,7 @@ class loanRequest(models.Model):
     reason = models.TextField()
     status = models.CharField(max_length=100, default='pending')
     amount = models.PositiveIntegerField(default=0)
-    year = models.PositiveIntegerField(default=1)
+    year = models.ForeignKey(Time, on_delete=models.CASCADE, related_name='loan_customer')
 
     def __str__(self):
         return self.customer.user.username
