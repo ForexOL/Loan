@@ -16,9 +16,9 @@ class loanCategory(models.Model):
 
 class Time(models.Model):
     name = models.CharField(max_length=250)
-
     def __str__(self):
         return self.name
+        
 class Percentage_Profit(models.Model):
     Percentage_profit = models.CharField(max_length=250)
     Time_limit = models.ForeignKey(Time, on_delete=models.CASCADE, related_name='time_limit')

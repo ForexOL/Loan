@@ -61,6 +61,9 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                if request.user.is_superuser:
+                    return HttpResponseRedirect(reverse('managerApp:dashboard'))
+                
                 return HttpResponseRedirect(reverse('home'))
 
         else:
@@ -76,6 +79,8 @@ def logout_view(request):
 
 @login_required(login_url='/account/login-customer')
 def edit_customer(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('managerApp:dashboard'))
     customer = CustomerSignUp.objects.get(user=request.user)
     form = UpdateCustomerForm(instance=customer)
     if request.method == 'POST':

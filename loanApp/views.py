@@ -4,7 +4,7 @@ from .forms import LoanRequestForm, LoanTransactionForm
 from .models import loanRequest, loanTransaction, CustomerLoan
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect, HttpResponse
-
+from django.urls import reverse
 from django.db.models import Sum
 # Create your views here.
 
@@ -17,7 +17,8 @@ def home(request):
 
 @login_required(login_url='/account/login-customer')
 def LoanRequest(request):
-
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('managerApp:dashboard'))
     form = LoanRequestForm()
 
     if request.method == 'POST':
@@ -49,6 +50,8 @@ def LoanRequest(request):
 
 @login_required(login_url='/account/login-customer')
 def LoanPayment(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('managerApp:dashboard'))
     form = LoanTransactionForm()
     if request.method == 'POST':
         form = LoanTransactionForm(request.POST)
@@ -64,6 +67,8 @@ def LoanPayment(request):
 
 @login_required(login_url='/account/login-customer')
 def UserTransaction(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('managerApp:dashboard'))
     transactions = loanTransaction.objects.filter(
         customer=request.user.customer)
     return render(request, 'loanApp/user_transaction.html', context={'transactions': transactions})
@@ -71,6 +76,8 @@ def UserTransaction(request):
 
 @login_required(login_url='/account/login-customer')
 def UserLoanHistory(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('managerApp:dashboard'))
     loans = loanRequest.objects.filter(
         customer=request.user.customer)
     return render(request, 'loanApp/user_loan_history.html', context={'loans': loans})
@@ -78,7 +85,8 @@ def UserLoanHistory(request):
 
 @login_required(login_url='/account/login-customer')
 def UserDashboard(request):
-
+    if request.user.is_superuser:
+        return HttpResponseRedirect(reverse('managerApp:dashboard'))
     requestLoan = loanRequest.objects.all().filter(
         customer=request.user.customer).count(),
     approved = loanRequest.objects.all().filter(

@@ -35,8 +35,12 @@
 
 
                 <div class="mb-4 form-outline">
-                    {% render_field form.loan_name|attr:'required:true' class="form-control" %}
-                    <label class="form-label">Loan Name</label>
+                    {% render_field form.Percentage_profit|attr:'required:true' class="form-control" %}
+                    <label class="form-label">Percentage</label>
+                </div>
+                <div class="mb-4 form-outline">
+                    {% render_field form.Time_limit|attr:'required:true' class="form-control" %}
+                    <label class="form-label">Time Limit</label>
                 </div>
                 <button type="submit" class="mb-4 btn btn-primary btn-block">Add Category</button>
 

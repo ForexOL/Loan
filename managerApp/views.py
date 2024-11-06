@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
 from loanApp.models import loanCategory, loanRequest, CustomerLoan, loanTransaction
-from .forms import LoanCategoryForm,TimeForm
+from .forms import LoanCategoryForm,TimeForm, Percentage_Form
 from loginApp.models import CustomerSignUp
 from django.contrib.auth.models import User
 from datetime import date
@@ -96,7 +96,7 @@ def add_time_limit(request):
         if form.is_valid():
             form.save()
             return redirect('managerApp:dashboard')
-    return render(request, 'adminadd_time.html', {'form': form})
+    return render(request, 'admin/add_time.html', {'form': form})
 
 
 @staff_member_required(login_url='/manager/admin-login')
@@ -107,7 +107,7 @@ def add_Percentage(request):
         if form.is_valid():
             form.save()
             return redirect('managerApp:dashboard')
-    return render(request, 'add_percentage.html', {'form': form})
+    return render(request, 'admin/add_percentage.html', {'form': form})
 
 
 @staff_member_required(login_url='/manager/admin-login')
